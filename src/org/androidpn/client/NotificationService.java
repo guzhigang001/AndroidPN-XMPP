@@ -45,6 +45,8 @@ public class NotificationService extends Service {
             .makeLogTag(NotificationService.class);
 
     public static final String SERVICE_NAME = "org.androidpn.client.NotificationService";
+    
+    private static NotificationService notificationService;
 
     private TelephonyManager telephonyManager;
 
@@ -82,6 +84,7 @@ public class NotificationService extends Service {
     @Override
     public void onCreate() {
         Log.d(LOGTAG, "onCreate()...");
+        notificationService=this;
         telephonyManager = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
         // wifiManager = (WifiManager) getSystemService(Context.WIFI_SERVICE);
         // connectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
@@ -129,6 +132,7 @@ public class NotificationService extends Service {
     @Override
     public void onDestroy() {
         Log.d(LOGTAG, "onDestroy()...");
+        notificationService=null;
         stop();
     }
 
@@ -293,6 +297,13 @@ public class NotificationService extends Service {
             }
         }
 
+    }
+    /**
+     * 
+     * @return notificationService 实例 在onCreate中赋值
+     */
+    public static NotificationService getNotificationService(){
+    	return notificationService;
     }
 
 }
