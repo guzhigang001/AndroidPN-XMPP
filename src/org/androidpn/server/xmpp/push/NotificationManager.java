@@ -120,6 +120,16 @@ public class NotificationManager {
 			e.printStackTrace();
 		}
 	}
+	
+	public void sendNotificationByAlias(String apiKey, String alias,
+			String title, String message, String uri,boolean shouldSave){
+		String username=sessionManager.getUsernameByAlias(alias);
+		if (username!=null) {
+			sendNotifcationToUser(apiKey, username, title, message, uri, shouldSave);
+		}
+		
+		
+	}
 
 	public void saveNotifcation(String uuid,String apiKey, String username,
 			String title, String message, String uri){

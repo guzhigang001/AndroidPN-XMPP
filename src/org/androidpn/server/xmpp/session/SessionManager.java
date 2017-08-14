@@ -50,6 +50,8 @@ public class SessionManager {
     private Map<String, ClientSession> preAuthSessions = new ConcurrentHashMap<String, ClientSession>();
 
     private Map<String, ClientSession> clientSessions = new ConcurrentHashMap<String, ClientSession>();
+    
+    private Map<String, String> aliasUsernameMap =      new ConcurrentHashMap<String, String>();
 
     private final AtomicInteger connectionsCounter = new AtomicInteger(0);
 
@@ -213,5 +215,18 @@ public class SessionManager {
             }
         }
     }
-
+    
+    /**
+     * 允许用户设置别名
+     * @param username 用户名
+     * @param alias     别名
+     */
+    public void setUserAlias(String username,String alias){
+    	aliasUsernameMap.put(alias, username);
+    }
+    
+    public String getUsernameByAlias(String alias){
+    	String usernameString=aliasUsernameMap.get(alias);
+    	return usernameString;//无username时为null
+    }
 }

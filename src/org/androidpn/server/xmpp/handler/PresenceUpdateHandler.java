@@ -34,7 +34,6 @@ import org.xmpp.packet.Packet;
 import org.xmpp.packet.PacketError;
 import org.xmpp.packet.Presence;
 
-import com.sun.corba.se.spi.activation.LocatorPackage.ServerLocation;
 
 /** 
  * This class is to handle the presence protocol.

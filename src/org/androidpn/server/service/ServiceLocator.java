@@ -57,5 +57,6 @@ public class ServiceLocator {
     public static NotificationServer getNotificationService() {
         return (NotificationServer) XmppServer.getInstance().getBean(NOTIFICATION_SERVICE);
     }
-
+    
+    
 }
