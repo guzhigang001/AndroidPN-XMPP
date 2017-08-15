@@ -23,6 +23,7 @@ import java.util.Map;
 import java.util.Random;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentSkipListSet;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import org.androidpn.server.xmpp.XmppServer;
@@ -30,6 +31,7 @@ import org.androidpn.server.xmpp.net.Connection;
 import org.androidpn.server.xmpp.net.ConnectionCloseListener;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.apache.mina.util.ConcurrentHashSet;
 import org.xmpp.packet.JID;
 
 /** 
@@ -52,6 +54,8 @@ public class SessionManager {
     private Map<String, ClientSession> clientSessions = new ConcurrentHashMap<String, ClientSession>();
     
     private Map<String, String> aliasUsernameMap =      new ConcurrentHashMap<String, String>();
+    
+    private Map<String, ConcurrentHashSet<String>> tagUsernamesMap=new ConcurrentHashMap<String, ConcurrentHashSet<String>>();
 
     private final AtomicInteger connectionsCounter = new AtomicInteger(0);
 
@@ -228,5 +232,25 @@ public class SessionManager {
     public String getUsernameByAlias(String alias){
     	String usernameString=aliasUsernameMap.get(alias);
     	return usernameString;//无username时为null
+    }
+    
+    /**
+     * 用户设置分组
+     * @param username 用户名
+     * @param tag      分组名
+     */
+    public void setUserTag(String username,String tag){
+    	ConcurrentHashSet<String> hashSet=tagUsernamesMap.get(tag);
+    	if (hashSet==null) {
+			ConcurrentHashSet<String> set=new ConcurrentHashSet<String>();
+			set.add(username);
+			tagUsernamesMap.put(tag, set);
+		}else {
+			hashSet.add(username);
+		}
+    }
+    
+    public Set<String> getUsernameByTag(String tag){
+    	return tagUsernamesMap.get(tag);
     }
 }

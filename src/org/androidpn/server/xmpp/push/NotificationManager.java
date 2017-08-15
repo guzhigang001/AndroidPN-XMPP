@@ -19,6 +19,7 @@ package org.androidpn.server.xmpp.push;
 
 import java.util.List;
 import java.util.Random;
+import java.util.Set;
 
 import org.androidpn.server.model.Notification;
 import org.androidpn.server.model.User;
@@ -116,11 +117,13 @@ public class NotificationManager {
 				saveNotifcation(uuid,apiKey, username, title, message, uri);
 			}
 		} catch (UserNotFoundException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
 	
+	/*
+	 * 通过别名发送推送
+	 */
 	public void sendNotificationByAlias(String apiKey, String alias,
 			String title, String message, String uri,boolean shouldSave){
 		String username=sessionManager.getUsernameByAlias(alias);
@@ -128,6 +131,19 @@ public class NotificationManager {
 			sendNotifcationToUser(apiKey, username, title, message, uri, shouldSave);
 		}
 		
+		
+	}
+	/*
+	 * 通过Tag发送广播
+	 */
+	public void sendNotificationByTag(String apiKey, String tag,
+			String title, String message, String uri,boolean shouldSave){
+		Set<String> usernameSet=sessionManager.getUsernameByTag(tag);
+		if (usernameSet!=null&&!usernameSet.isEmpty()) {
+			for(String username:usernameSet){
+				sendNotifcationToUser(apiKey, username, title, message, uri, shouldSave);
+			}
+		}
 		
 	}
 
