@@ -1,5 +1,8 @@
 package org.androidpn.demoapp;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.androidpn.client.ServiceManager;
 
 
@@ -33,6 +36,10 @@ public class DemoAppActivity extends Activity {
         serviceManager.setNotificationIcon(R.drawable.notification);
         serviceManager.startService();
         serviceManager.setAlias("abd123456");
+        List<String> tagsList=new ArrayList<String>();
+        tagsList.add("aa");
+        tagsList.add("cc");
+        serviceManager.setTags(tagsList);
     }
 
 }

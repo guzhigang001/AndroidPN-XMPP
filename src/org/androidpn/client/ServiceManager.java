@@ -15,6 +15,7 @@
  */
 package org.androidpn.client;
 
+import java.util.List;
 import java.util.Properties;
 
 import org.jivesoftware.smack.packet.IQ;
@@ -198,6 +199,49 @@ public final class ServiceManager {
 		context.startActivity(intent);
 	}
 
+	public void setTags(final List<String> tagsList){
+		final String username=sharedPrefs.getString(Constants.XMPP_USERNAME, "");
+		if (TextUtils.isEmpty(username)||tagsList.isEmpty()||tagsList==null) {
+			return;
+		}
+		
+		new Thread(new Runnable() {
+			
+			@Override
+			public void run() {
+				try {
+					Thread.sleep(1000);//防止方法连续调用 出现NotificationService未启动就去调用它的实例
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+				//ServiceManager-->NotificationService-->XmppManager //存在向后顺序 无法在XmppManager没创建之前就调用
+				//xmppManager.getConnection().sendPacket(deliverConfirmIQ);//向服务器发送数据packet
+				NotificationService notificationService=NotificationService.getNotificationService();
+				XmppManager xmppManager=notificationService.getXmppManager();
+				if (xmppManager!=null) {
+					if (!xmppManager.isAuthenticated()) {//isAuthenticated是否通过验证
+                       try {
+						synchronized (xmppManager) {
+							Log.d(LOGTAG, "wait for Authenticated...");
+							xmppManager.wait();//启动等待功能的目的是因为登录成功后才能sendPacket();
+						}
+					} catch (InterruptedException e) {
+						e.printStackTrace();
+					}
+					}
+				}
+				Log.d(LOGTAG, "wait for Authenticated is done... send SetTagsIQ now");
+				SetTagsIQ iq=new SetTagsIQ();
+				iq.setType(IQ.Type.SET);
+				iq.setUsername(username);
+				iq.setTagsList(tagsList);
+				xmppManager.getConnection().sendPacket(iq);
+				
+			}
+		}).start();
+		
+		
+	}
 	public void setAlias(final String alias){
 		final String username=sharedPrefs.getString(Constants.XMPP_USERNAME, "");
 		if (TextUtils.isEmpty(username)||TextUtils.isEmpty(alias)) {
