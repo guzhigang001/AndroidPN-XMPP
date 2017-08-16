@@ -15,11 +15,11 @@
 	<%--<div style="background:#eee; margin:20px 0px; padding:20px; width:500px; border:solid 1px #999;">--%>
 	<div style="margin:20px 0px;">
 		<form action="notification.do?action=send" method="post"
-			style="margin: 0px;">
+			style="margin: 0px;" enctype="multipart/form-data">
 			<table width="600" cellpadding="4" cellspacing="0" border="0">
 				<tr>
 					<td width="20%">To:</td>
-					<td width="80%">
+					<td w	idth="80%">
 					<input type="radio" name="broadcast" value="0"checked="checked" /> All (Broadcast) 
 					<input type="radio"name="broadcast" value="1" /> By username 
 					<input type="radio"name="broadcast" value="2" /> By Alias
@@ -63,6 +63,13 @@
 					<td><input type="text" id="uri" name="uri" value=""
 						style="width:380px;" /> <br /> <span style="font-size:0.8em">ex)
 							http://www.dokdocorea.com, geo:37.24,131.86, tel:111-222-3333</span>
+					</td>
+				</tr>
+				<tr>
+				<tr>
+					<td>Image:</td>
+					<td><input type="file" id="image" name="image" value=""
+						style="width:380px;" /> <br /> <span style="font-size:0.8em">only image is valid.</span>
 					</td>
 				</tr>
 				<tr>

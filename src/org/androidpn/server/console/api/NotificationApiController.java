@@ -47,12 +47,12 @@ public class NotificationApiController extends MultiActionController {
 		String apiKey = Config.getString("apiKey", "");
 		logger.debug("apiKey=" + apiKey);
 
-		if (broadcast.equalsIgnoreCase("Y")) {
-			notificationManager.sendBroadcast(apiKey, title, message, uri);
-		} else {
-			notificationManager.sendNotifcationToUser(apiKey, username, title,
-					message, uri,true);
-		}  
+//		if (broadcast.equalsIgnoreCase("Y")) {
+//			notificationManager.sendBroadcast(apiKey, title, message, uri);
+//		} else {
+//			notificationManager.sendNotifcationToUser(apiKey, username, title,
+//					message, uri,true);
+//		}  
 		
 		response.getWriter().print("{\"result\":\"0\",\"description\":\"success\"}");
 //		ModelAndView mav = new ModelAndView();

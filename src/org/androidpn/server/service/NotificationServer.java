@@ -13,4 +13,6 @@ public interface NotificationServer {
 	void deleteNotification(Notification notification);
 	
 	void deleteNotificationByUUID(String uuid);
+	
+//	String findUUIDByUsername(String username);
 }

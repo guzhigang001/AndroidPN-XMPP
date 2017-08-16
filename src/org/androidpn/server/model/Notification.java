@@ -44,7 +44,16 @@ public class Notification {
 	}
 	@Column(name="uuid", length=64, unique=true, nullable=false)
 	private String uuid;
+	
+	@Column(name="image_url", length=64)
+	private String imageUrl;
 
+	public String getImageUrl() {
+		return imageUrl;
+	}
+	public void setImageUrl(String imageUrl) {
+		this.imageUrl = imageUrl;
+	}
 	public long getId() {
 		return id;
 	}
