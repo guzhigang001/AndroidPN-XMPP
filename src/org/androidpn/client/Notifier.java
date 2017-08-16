@@ -52,7 +52,7 @@ public class Notifier {
     }
 
     public void notify(String notificationId, String apiKey, String title,
-            String message, String uri) {
+            String message, String uri,String imageurl) {
         Log.d(LOGTAG, "notify()...");
 
         Log.d(LOGTAG, "notificationId=" + notificationId);
@@ -60,14 +60,14 @@ public class Notifier {
         Log.d(LOGTAG, "notificationTitle=" + title);
         Log.d(LOGTAG, "notificationMessage=" + message);
         Log.d(LOGTAG, "notificationUri=" + uri);
-
+        Log.d(LOGTAG, "notificationImageUrl=" + imageurl);
         if (isNotificationEnabled()) {
             // Show the toast
             if (isNotificationToastEnabled()) {
                 Toast.makeText(context, message, Toast.LENGTH_LONG).show();
             }
 
-            // Notification
+            // Notification 通知的设置在此处
             Notification notification = new Notification();
             notification.icon = getNotificationIcon();
             notification.defaults = Notification.DEFAULT_LIGHTS;
@@ -80,6 +80,7 @@ public class Notifier {
             notification.flags |= Notification.FLAG_AUTO_CANCEL;
             notification.when = System.currentTimeMillis();
             notification.tickerText = message;
+            
 
             //            Intent intent;
             //            if (uri != null
@@ -105,12 +106,12 @@ public class Notifier {
             intent.putExtra(Constants.NOTIFICATION_TITLE, title);
             intent.putExtra(Constants.NOTIFICATION_MESSAGE, message);
             intent.putExtra(Constants.NOTIFICATION_URI, uri);
+            intent.putExtra(Constants.NOTIFICATION_IMAGE_URL, imageurl);
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             intent.setFlags(Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS);
             intent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
             intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
             intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-
             PendingIntent contentIntent = PendingIntent.getActivity(context, random.nextInt(),
                     intent, PendingIntent.FLAG_UPDATE_CURRENT);
 

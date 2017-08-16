@@ -57,16 +57,16 @@ public final class NotificationReceiver extends BroadcastReceiver {
                     .getStringExtra(Constants.NOTIFICATION_MESSAGE);
             String notificationUri = intent
                     .getStringExtra(Constants.NOTIFICATION_URI);
-
+            String notificationImageUrl=intent.getStringExtra(Constants.NOTIFICATION_IMAGE_URL);
             Log.d(LOGTAG, "notificationId=" + notificationId);
             Log.d(LOGTAG, "notificationApiKey=" + notificationApiKey);
             Log.d(LOGTAG, "notificationTitle=" + notificationTitle);
             Log.d(LOGTAG, "notificationMessage=" + notificationMessage);
             Log.d(LOGTAG, "notificationUri=" + notificationUri);
-
+            Log.d(LOGTAG, "notificationImageUrl=" + notificationImageUrl);
             Notifier notifier = new Notifier(context);
             notifier.notify(notificationId, notificationApiKey,
-                    notificationTitle, notificationMessage, notificationUri);
+                    notificationTitle, notificationMessage, notificationUri,notificationImageUrl);
         }
 
         //        } else if (Constants.ACTION_NOTIFICATION_CLICKED.equals(action)) {

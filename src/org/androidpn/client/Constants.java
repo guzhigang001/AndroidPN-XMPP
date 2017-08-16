@@ -70,6 +70,7 @@ public class Constants {
 
     public static final String NOTIFICATION_URI = "NOTIFICATION_URI";
 
+    public static final String NOTIFICATION_IMAGE_URL = "NOTIFICATION_IMAGE_URL";
     // INTENT ACTIONS
 
     public static final String ACTION_SHOW_NOTIFICATION = "org.androidpn.client.SHOW_NOTIFICATION";

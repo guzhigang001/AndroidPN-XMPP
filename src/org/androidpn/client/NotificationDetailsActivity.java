@@ -15,10 +15,17 @@
  */
 package org.androidpn.client;
 
+import com.android.volley.RequestQueue;
+import com.android.volley.toolbox.ImageLoader;
+import com.android.volley.toolbox.ImageLoader.ImageCache;
+import com.android.volley.toolbox.NetworkImageView;
+import com.android.volley.toolbox.Volley;
+
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
 import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Bundle;
@@ -42,6 +49,8 @@ public class NotificationDetailsActivity extends Activity {
     private String callbackActivityPackageName;
 
     private String callbackActivityClassName;
+    
+    private RequestQueue requestQueue;
 
     public NotificationDetailsActivity() {
     }
@@ -56,7 +65,7 @@ public class NotificationDetailsActivity extends Activity {
                 Constants.CALLBACK_ACTIVITY_PACKAGE_NAME, "");
         callbackActivityClassName = sharedPrefs.getString(
                 Constants.CALLBACK_ACTIVITY_CLASS_NAME, "");
-
+        requestQueue=Volley.newRequestQueue(this);
         Intent intent = getIntent();
         String notificationId = intent
                 .getStringExtra(Constants.NOTIFICATION_ID);
@@ -68,12 +77,15 @@ public class NotificationDetailsActivity extends Activity {
                 .getStringExtra(Constants.NOTIFICATION_MESSAGE);
         String notificationUri = intent
                 .getStringExtra(Constants.NOTIFICATION_URI);
-
+        String notificationImageUrl=intent
+        		.getStringExtra(Constants.NOTIFICATION_IMAGE_URL);
+;
         Log.d(LOGTAG, "notificationId=" + notificationId);
         Log.d(LOGTAG, "notificationApiKey=" + notificationApiKey);
         Log.d(LOGTAG, "notificationTitle=" + notificationTitle);
         Log.d(LOGTAG, "notificationMessage=" + notificationMessage);
         Log.d(LOGTAG, "notificationUri=" + notificationUri);
+        Log.d(LOGTAG, "notificationImageUrl=" + notificationImageUrl);
 
         //        Display display = getWindowManager().getDefaultDisplay();
         //        View rootView;
@@ -84,12 +96,12 @@ public class NotificationDetailsActivity extends Activity {
         //        }
 
         View rootView = createView(notificationTitle, notificationMessage,
-                notificationUri);
+                notificationUri,notificationImageUrl);
         setContentView(rootView);
     }
 
     private View createView(final String title, final String message,
-            final String uri) {
+            final String uri,final String imageUrl) {
 
         LinearLayout linearLayout = new LinearLayout(this);
         linearLayout.setBackgroundColor(0xffeeeeee);
@@ -162,9 +174,34 @@ public class NotificationDetailsActivity extends Activity {
         LinearLayout innerLayout = new LinearLayout(this);
         innerLayout.setGravity(Gravity.CENTER);
         innerLayout.addView(okButton);
-
+        
+        
         linearLayout.addView(innerLayout);
-
+        
+        
+        NetworkImageView nImageView=new NetworkImageView(this);
+        
+        layoutParams = new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.WRAP_CONTENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT);
+        nImageView.setLayoutParams(layoutParams);
+        linearLayout.addView(nImageView);
+        
+        ImageLoader imageLoader=new ImageLoader(requestQueue,new ImageCache() {
+			
+			@Override
+			public void putBitmap(String url, Bitmap bitmap) {
+				
+			}
+			
+			@Override
+			public Bitmap getBitmap(String url) {
+				return null;
+			}
+		});
+        
+        nImageView.setImageUrl(imageUrl, imageLoader);
+        
         return linearLayout;
     }
 

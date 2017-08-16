@@ -33,6 +33,8 @@ public class NotificationIQ extends IQ {
     private String message;
 
     private String uri;
+    
+    private String imageUrl;
 
     public NotificationIQ() {
     }
@@ -88,5 +90,13 @@ public class NotificationIQ extends IQ {
     public void setUri(String url) {
         this.uri = url;
     }
+
+	public String getImageUrl() {
+		return imageUrl;
+	}
+
+	public void setImageUrl(String imageUrl) {
+		this.imageUrl = imageUrl;
+	}
 
 }

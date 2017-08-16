@@ -305,7 +305,7 @@ public class ProviderManager {
      * @param namespace the XML namespace.
      * @param provider the IQ provider.
      */
-    public void addIQProvider(String elementName, String namespace,
+	public void addIQProvider(String elementName, String namespace,
             Object provider)
     {
         if (!(provider instanceof IQProvider || (provider instanceof Class &&
