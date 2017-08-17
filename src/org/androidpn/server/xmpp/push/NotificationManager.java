@@ -71,7 +71,7 @@ public class NotificationManager {
 	 * @param uri the uri
 	 */
 	public void sendBroadcast(String apiKey, String title, String message,
-			String uri,String imageUrl) {
+			String uri,String imageUrl,boolean shouldSava) {
 		log.debug("sendBroadcast()...");
 		List<User> userList=userService.getUsers();
 		for (User user : userList) {

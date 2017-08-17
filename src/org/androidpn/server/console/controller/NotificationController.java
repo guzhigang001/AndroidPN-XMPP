@@ -95,7 +95,7 @@ public class NotificationController extends MultiActionController {
 			}
 		}
         if (broadcast.equals("0")) {
-            notificationManager.sendBroadcast(apiKey, title, message, uri,imageUrl);
+            notificationManager.sendBroadcast(apiKey, title, message, uri,imageUrl,false);
         } else if(broadcast.equals("1")){
             notificationManager.sendNotifcationToUser(apiKey, username, title,message, uri,imageUrl,true);
         }else if(broadcast.equals("2")){
@@ -133,7 +133,7 @@ public class NotificationController extends MultiActionController {
 //			String serverName=request.getServerName();
 			int serverPort=request.getServerPort();
 			
-			String imageUrl="http://192.168.0.100:"+serverPort+"/upload/"+fileName;
+			String imageUrl="http://192.168.0.103:"+serverPort+"/upload/"+fileName;
 			System.out.println("imageUrl--------->"+imageUrl);
 			return imageUrl;
 		}
