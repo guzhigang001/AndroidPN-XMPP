@@ -65,7 +65,13 @@ public class NotificationSettingsActivity extends PreferenceActivity {
         //        PreferenceCategory prefCat = new PreferenceCategory(this);
         //        // inlinePrefCat.setTitle("");
         //        root.addPreference(prefCat);
-
+        
+        CheckBoxPreference atuoStar=new CheckBoxPreference(this);
+        atuoStar.setKey(Constants.SETTINGS_AUTO_START);
+        atuoStar.setTitle("Auto Start");
+        atuoStar.setSummary("Auto start server at boot");
+        atuoStar.setDefaultValue(Boolean.TRUE);
+        
         CheckBoxPreference notifyPref = new CheckBoxPreference(this);
         notifyPref.setKey(Constants.SETTINGS_NOTIFICATION_ENABLED);
         notifyPref.setTitle("Notifications Enabled");
@@ -99,7 +105,7 @@ public class NotificationSettingsActivity extends PreferenceActivity {
         vibratePref.setSummary("Vibrate the phone for notifications");
         vibratePref.setDefaultValue(Boolean.TRUE);
         // vibratePref.setDependency(Constants.SETTINGS_NOTIFICATION_ENABLED);
-
+        root.addPreference(atuoStar);
         root.addPreference(notifyPref);
         root.addPreference(soundPref);
         root.addPreference(vibratePref);

@@ -50,6 +50,8 @@ public class Constants {
 
     public static final String NOTIFICATION_ICON = "NOTIFICATION_ICON";
 
+    public static final String SETTINGS_AUTO_START = "SETTINGS_AUTO_START";
+
     public static final String SETTINGS_NOTIFICATION_ENABLED = "SETTINGS_NOTIFICATION_ENABLED";
 
     public static final String SETTINGS_SOUND_ENABLED = "SETTINGS_SOUND_ENABLED";

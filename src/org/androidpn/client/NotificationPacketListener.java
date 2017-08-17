@@ -15,6 +15,9 @@
  */
 package org.androidpn.client;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 import org.jivesoftware.smack.PacketListener;
 import org.jivesoftware.smack.packet.IQ;
 import org.jivesoftware.smack.packet.Packet;
@@ -55,7 +58,17 @@ public class NotificationPacketListener implements PacketListener {
                 String notificationMessage = notification.getMessage();
                 String notificationUri = notification.getUri();
                 String notificationImageUrl = notification.getImageUrl();
+                NotificationHistory history=new NotificationHistory();
+                history.setApiKey(notificationApiKey);
+                history.setImageUrl(notificationImageUrl);
+                history.setMessage(notificationMessage);
+                history.setTitle(notificationTitle);
+                history.setUri(notificationUri);
                 
+                SimpleDateFormat format=new SimpleDateFormat("yy-MM-dd HH:mm");
+                String time=format.format(new Date());
+                history.setTime(time);
+                history.save();
                 Intent intent = new Intent(Constants.ACTION_SHOW_NOTIFICATION);
                 intent.putExtra(Constants.NOTIFICATION_ID, notificationId);
                 intent.putExtra(Constants.NOTIFICATION_API_KEY,
@@ -71,7 +84,6 @@ public class NotificationPacketListener implements PacketListener {
                 //                        "notif://notification.androidpn.org/")).append(
                 //                        notificationApiKey).append("/").append(
                 //                        System.currentTimeMillis()).toString()));
-
                 xmppManager.getContext().sendBroadcast(intent);
                 DeliverConfirmIQ deliverConfirmIQ=new DeliverConfirmIQ();
                 deliverConfirmIQ.setUuid(notificationId);
